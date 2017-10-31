@@ -1,0 +1,18 @@
+{% macro displayCategory(category_list) %} 
+  {% for category in category_list%}
+  <div class="col-md-2">
+    <li>
+      <a href="/category/{{category.id}}">{{category.name}}</a>
+    </li>
+  </div>
+    {% endfor%}
+{% endmacro%}
+
+{% macro displayPitches(pitch_list) %} 
+  {% for pitch in pitch_list%}
+  <li>
+    {{pitch.content}}
+    {{pitch.date_posted}}
+  </li>
+  {% endfor%}
+{% endmacro%}
