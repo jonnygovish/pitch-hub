@@ -1,4 +1,5 @@
 {%extends 'base.html'%}
+{% import 'macros.html' as macro%}
 
 {% block styles%}
 {{ super() }}
@@ -8,11 +9,16 @@
 {% block content %}
 <div class="container">
   <div class="block">
-    <h2>Pitches</h2>
-    <div class="pitches">
+      <h2>Pitches</h2>
+      <div class="row">
+          <ul class="list-unstyled">
+              {{macro.displayCategory(category)}}
+          </ul>
+      </div>
+    <!-- <div class="pitches">
         <ul class="nav nav-tabs">
           <li class="tab active" data-id="Pick-up-lines" data-value="Pick-up-lines">
-              <a data-toggle="tab" href="#">Pick-up Lines</a>
+              <a data-toggle="tab" >Pick-up Lines</a>
           </li>
           <li class="tab " data-id="InterviewPitch" data-value="InterviewPitch">
               <a data-toggle="tab" href="#">Interview Pitch</a>
@@ -24,7 +30,7 @@
               <a data-toggle="tab" href="#">Promotion Picth</a>
           </li>
         </ul>
-    </div>
+    </div> -->
   </div>
 </div>
 {% endblock%}
