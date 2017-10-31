@@ -11,16 +11,31 @@ def load_user(user_id):
 class Pitch(db.Model):
   __tablename__ = 'pitches'
   id = db.Column(db.Integer,primary_key= True)
-  author = db.Column(db.String(20))
   content = db.Column(db.String(255))
-  date_posted =db.Column(db.DateTime)
+  date_posted =db.Column(db.DateTime,default = datetime.utcnow)
   category_id = db.Column(db.Integer,db.ForeignKey('categories.id'))
+  user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+
+  def save_pitch(self):
+    db.session.add(self)
+    db.session.commit()
+  @classmethod
+  def get_pitch(cls,id):
+    pitches = Pitch.query.filter_by(category_id=id)
+    return pitches
+  
 
 class Category(db.Model):
   __tablename__ = 'categories'
   id = db.Column(db.Integer,primary_key=True)
   name = db.Column(db.String(140))
-  pitches = db.relationship('Pitch', backref='pitch',lazy='dynamic')
+  pitches = db.relationship('Pitch', backref='category',lazy='dynamic')
+
+  @classmethod
+  def get_categories(cls):
+    categories = Category.query.all()
+    return categories
+    
 
 class User(UserMixin,db.Model):
   __tablename__ = 'users'
@@ -29,7 +44,8 @@ class User(UserMixin,db.Model):
   username = db.Column(db.String(255))
   email = db.Column(db.String(255),unique = True, index = True)
   password_hash = db.Column(db.String(255))
-  pitches = db.relationship("Pitch", backref = 'pitch', lazy = 'dynamic')
+  pitches = db.relationship("Pitch", backref = 'user', lazy = 'dynamic')
+
 
 
   @property
