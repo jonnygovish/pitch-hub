@@ -51,7 +51,6 @@ class Comments(db.Model):
   @classmethod
   def get_comment(self,id):
     comments = Comments.query.filter_by(pitch_id =id).all()
-    return comments
 
 class User(UserMixin,db.Model):
   __tablename__ = 'users'
