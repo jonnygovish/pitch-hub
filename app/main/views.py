@@ -46,7 +46,7 @@ def new_pitch(id):
 @main.route('/pitch/<int:id>')
 def single_pitch(id):
   pitch = Pitch.query.get(id)
-  comment = Comments.get_comment(id)
+  comment = Comments.get_comment(pitch.id)
   
   title = "Pitch page"
 
