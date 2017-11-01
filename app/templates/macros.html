@@ -10,9 +10,20 @@
 
 {% macro displayPitches(pitch_list) %} 
   {% for pitch in pitch_list%}
-  <li>
-    {{pitch.content}}
-    {{pitch.date_posted}}
+  <li class="list-unstyled">
+    <a href="/pitch/{{pitch.id}}"><h3>{{pitch.content}}</h3></a>
+   <small>date posted:{{pitch.date_posted}}</small> 
+   <br>
+   <small>author:{{pitch.user_id}}</small> 
   </li>
   {% endfor%}
+{% endmacro%}
+
+<!-- Display Comments -->
+{% macro displayComments(comment_list) %} 
+{% for comment in comment_list%}
+  <li class="list-unstyled">
+    {{comment.body}}
+  </li>
+{% endfor%}
 {% endmacro%}
