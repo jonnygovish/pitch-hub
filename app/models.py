@@ -22,9 +22,9 @@ class Pitch(db.Model):
     db.session.commit()
   @classmethod
   def get_pitch(cls,id):
-    pitches = Pitch.query.filter_by(category_id=id)
+    pitches = Pitch.query.order_by(Pitch.date_posted.desc()).filter_by(category_id =id)
     return pitches
-  
+    #  Blogpost.query.order_by(Blogpost.date_posted.desc()).all()
 
 class Category(db.Model):
   __tablename__ = 'categories'
