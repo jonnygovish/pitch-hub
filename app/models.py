@@ -15,6 +15,7 @@ class Pitch(db.Model):
   date_posted =db.Column(db.DateTime,default = datetime.utcnow)
   category_id = db.Column(db.Integer,db.ForeignKey('categories.id'))
   user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+  comments = db.relationship("Comments", backref = 'pitch', lazy ='dynamic')
 
   def save_pitch(self):
     db.session.add(self)
@@ -35,7 +36,22 @@ class Category(db.Model):
   def get_categories(cls):
     categories = Category.query.all()
     return categories
-    
+
+class Comments(db.Model):
+  __tablename__ = "comments"
+  id = db.Column(db.Integer,primary_key = True)
+  body = db.Column(db.String(255))
+  pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))  
+  user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+
+  def save_comment(self):
+    db.session.add(self)
+    db.session.commit()
+
+  @classmethod
+  def get_comment(self,id):
+    comments = Comments.query.filter_by(pitch_id =id).all()
+    return comments
 
 class User(UserMixin,db.Model):
   __tablename__ = 'users'
@@ -45,6 +61,7 @@ class User(UserMixin,db.Model):
   email = db.Column(db.String(255),unique = True, index = True)
   password_hash = db.Column(db.String(255))
   pitches = db.relationship("Pitch", backref = 'user', lazy = 'dynamic')
+  comments = db.relationship("Comments", backref = 'user', lazy = 'dynamic')
 
 
 
