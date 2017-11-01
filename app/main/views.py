@@ -1,8 +1,8 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from ..models import Pitch, Category
+from ..models import Pitch, Category,Comments
 from flask_login import login_required, current_user
-from .forms import PitchForm
+from .forms import PitchForm,CommentForm
 from datetime import datetime
 
 @main.route('/')
@@ -42,6 +42,35 @@ def new_pitch(id):
 
   title = "New pitch page"
   return render_template('new_pitch.html', pitch_form = form, title = title )
+
+@main.route('/pitch/<int:id>')
+def single_pitch(id):
+  pitch = Pitch.query.get(id)
+  comment = Comments.get_comment(id)
+  
+  title = "Pitch page"
+
+  return render_template('pitch.html', pitch = pitch, comment = comment, title= title)
+
+@main.route('/pitch/new/<int:id>', methods = ["GET","POST"])
+@login_required
+def new_comment(id):
+  pitch = Pitch.query.filter_by(id =id).first()
+  if pitch is None:
+    abort(404) 
+  
+  form = CommentForm()
+
+  if form.validate_on_submit():
+    body = form.body.data
+    new_comment = Comments(body = body,pitch_id = pitch.id, user_id = current_user.id)
+
+    new_comment.save_comment()
+
+    return redirect(url_for('.category', id=pitch.id))
+
+  title = "New Comment"
+  return render_template('new_comment.html', comment_form = form, title = title)
 
 
   
