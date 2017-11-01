@@ -13,17 +13,7 @@ The user can:
 * Comment on the different pitches and leave a comment
 * Vote on the pitch and give it a downvote or upvote
 
-## Behaviours
-| Behavior        | Input           | Outcome  |
-| ------------- |:-------------:| -----:|
-|  |  | |
-| | |  |
-| | | |
-|  |  |  |
-| | |  |
-| | | |
-| | | |
-|  | | |
+
 
 
 
