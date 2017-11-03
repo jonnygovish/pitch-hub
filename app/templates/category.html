@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% import 'macros.html' as macro%}
+{% import "bootstrap/wtf.html" as wtf %}
 
 
 {% block styles%}
@@ -10,9 +11,22 @@
 {% block content %}
 <div class="container">
   <div class ="block">
-      <h1>pitches</h1>
-      <hr>
-      {% if pitch%}
+    <div class="row">
+      <div class="col-md-4">
+        <h1>{{title}}</h1>
+      </div>
+      
+      <div class="col-md-4"></div>
+
+      
+      <div class="col-md-4">
+        <a href="/category/pitch/new/{{category.id}}" class="btn btn-success btn-md">Write a new pitch</a>
+      </div>
+    </div>
+      
+    <hr>
+      
+    {% if pitch%}
       <ul>
         {{macro.displayPitches(pitch)}}
       </ul>
@@ -20,7 +34,6 @@
       <h3 class="text-center">This category has no pitch</h3>
       {%endif%}
       <hr>
-      <a href="/category/pitch/new/{{category.id}}" class="btn btn-success btn-lg text-center">Write a new pitch</a>
     </div>
 </div>
 {% endblock %}
