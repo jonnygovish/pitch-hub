@@ -24,7 +24,11 @@ class Pitch(db.Model):
   def get_pitch(cls,id):
     pitches = Pitch.query.order_by(Pitch.date_posted.desc()).filter_by(category_id =id)
     return pitches
-    #  Blogpost.query.order_by(Blogpost.date_posted.desc()).all()
+  @classmethod
+  def get_all_pitches(cls):
+    all_pitches = Pitch.query.all()
+    return all_pitches
+    
 
 class Category(db.Model):
   __tablename__ = 'categories'
