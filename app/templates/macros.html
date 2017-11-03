@@ -1,10 +1,9 @@
 {% macro displayCategory(category_list) %} 
   {% for category in category_list%}
-  <div class="col-md-2">
-    <li>
-      <a href="/category/{{category.id}}">{{category.name}}</a>
+    <li class ="tab active" data-id="{{category.name}}" data-value="{{category.name}}">
+      <a href="/category/{{category.id}}" data-toggle="tab">{{category.name}}</a>
     </li>
-  </div>
+        
     {% endfor%}
 {% endmacro%}
 
@@ -12,10 +11,10 @@
   {% for pitch in pitch_list%}
   <li class="list-unstyled">
     <a href="/pitch/{{pitch.id}}"><h3>{{pitch.content}}</h3></a>
-   <small>date posted:{{pitch.date_posted}}</small> 
-   <br>
-   <small>author:{{pitch.user.username}}</small> 
+    <p class="text-right">author:{{pitch.user.username}}</p> 
+    <p class="text-right"><span id="time" >date posted:{{pitch.date_posted.strftime('%B %d, %Y %r')}}</span></p>
   </li>
+  <hr>
   {% endfor%}
 {% endmacro%}
 
