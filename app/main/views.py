@@ -10,17 +10,19 @@ def index():
   """
   """
   category = Category.get_categories()
+  pitch = Pitch.get_all_pitches()
   title = "Welcome to Pitch Hub"
-  return render_template('index.html', title = title, category = category)
+  return render_template('index.html', title = title, category = category, pitch =pitch)
 @main.route('/category/<int:id>')
 def category(id):
   """
   """
   category = Category.query.get(id)
-  pitch = Pitch.get_pitch(category.id)
-  title = "Pitches"
+  pitch = Pitch.get_pitch(id)
+  form = PitchForm()
+  title =  'pitches'
 
-  return render_template('category.html', category = category, pitch = pitch, title = title)
+  return render_template('category.html', category = category, pitch = pitch, title = title, pitch_form = form)
 
 @main.route('/category/pitch/new/<int:id>',methods = ["GET","POST"])
 @login_required
@@ -41,7 +43,7 @@ def new_pitch(id):
     return  redirect(url_for('.category', id=category.id))
 
   title = "New pitch page"
-  return render_template('new_pitch.html', pitch_form = form, title = title )
+  return render_template('category.html', pitch_form = form, title = title )
 
 @main.route('/pitch/<int:id>')
 def single_pitch(id):
@@ -67,7 +69,7 @@ def new_comment(id):
 
     new_comment.save_comment()
 
-    return redirect(url_for('.category', id=pitch.id))
+    return redirect(url_for('.single_pitch', id=pitch.id))
 
   title = "New Comment"
   return render_template('new_comment.html', comment_form = form, title = title)
